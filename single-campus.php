@@ -15,15 +15,23 @@
       <div class="generic-content"><?php the_content(); ?></div>
 
       <?php 
-        $mapLocation = get_field('map_location');
+        $address = get_field('campus_address');
+        $description = get_field('campus_description');
       ?>
 
-      <div class="acf-map">
-          <div class="marker" data-lat="<?php echo $mapLocation['lat'] ?>" data-lng="<?php echo $mapLocation['lng']; ?>">
-            <h3><?php the_title(); ?></h3>
-            <?php echo $mapLocation['address']; ?>
-          </div>
-      </div>
+      <?php if ($address || $description): ?>
+        <div class="campus-details">
+          <?php if ($address): ?>
+            <p><strong>Address:</strong> <?php echo esc_html($address); ?></p>
+          <?php endif; ?>
+          <?php if ($description): ?>
+            <div class="campus-description">
+              <strong>Description:</strong>
+              <?php echo wp_kses_post($description); ?>
+            </div>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
 
       <?php 
         $relatedPrograms = new WP_Query(array(

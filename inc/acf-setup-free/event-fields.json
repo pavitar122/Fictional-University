@@ -7,7 +7,7 @@
       "label": "Event Date",
       "name": "event_date",
       "type": "date_picker",
-      "instructions": "",
+      "instructions": "Select the date of the event",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
@@ -24,7 +24,7 @@
       "label": "Related Programs",
       "name": "related_programs",
       "type": "relationship",
-      "instructions": "",
+      "instructions": "Select related programs for this event",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {

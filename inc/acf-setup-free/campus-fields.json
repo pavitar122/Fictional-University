@@ -1,0 +1,61 @@
+{
+  "key": "group_64f0b1c8a1b2c",
+  "title": "Campus Fields",
+  "fields": [
+    {
+      "key": "field_64f0b1c8a1b2f",
+      "label": "Campus Address",
+      "name": "campus_address",
+      "type": "text",
+      "instructions": "Enter the full address of the campus",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_64f0b1c8a1b30",
+      "label": "Campus Description",
+      "name": "campus_description",
+      "type": "textarea",
+      "instructions": "Describe the campus, facilities, and student experience",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "rows": 5,
+      "new_lines": "wpautop"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "campus"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0
+}
