@@ -2,6 +2,150 @@
 
 require get_theme_file_path('/inc/like-route.php');
 require get_theme_file_path('/inc/search-route.php');
+require get_theme_file_path('/inc/acf-init.php');
+
+// Register custom post types
+function university_custom_post_types() {
+    // Register Note post type
+    $note_args = array(
+        'label' => __('Notes'),
+        'labels' => array(
+            'name' => __('Notes'),
+            'singular_name' => __('Note'),
+            'add_new' => __('Add New'),
+            'add_new_item' => __('Add New Note'),
+            'edit_item' => __('Edit Note'),
+            'new_item' => __('New Note'),
+            'view_item' => __('View Note'),
+            'search_items' => __('Search Notes'),
+            'not_found' => __('No Notes Found'),
+            'not_found_in_trash' => __('No Notes Found in Trash'),
+            'parent_item_colon' => __('Parent Note:'),
+        ),
+        'public' => false,
+        'show_ui' => false,
+        'show_in_rest' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'supports' => array('title', 'editor'),
+        'has_archive' => false,
+        'show_in_menu' => false,
+    );
+    register_post_type('note', $note_args);
+
+    // Register Campus post type
+    $campus_args = array(
+        'label' => __('Campuses'),
+        'labels' => array(
+            'name' => __('Campuses'),
+            'singular_name' => __('Campus'),
+            'add_new' => __('Add New'),
+            'add_new_item' => __('Add New Campus'),
+            'edit_item' => __('Edit Campus'),
+            'new_item' => __('New Campus'),
+            'view_item' => __('View Campus'),
+            'search_items' => __('Search Campuses'),
+            'not_found' => __('No Campuses Found'),
+            'not_found_in_trash' => __('No Campuses Found in Trash'),
+            'parent_item_colon' => __('Parent Campus:'),
+        ),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'rewrite' => array('slug' => 'campuses'),
+    );
+    register_post_type('campus', $campus_args);
+
+    // Register Program post type
+    $program_args = array(
+        'label' => __('Programs'),
+        'labels' => array(
+            'name' => __('Programs'),
+            'singular_name' => __('Program'),
+            'add_new' => __('Add New'),
+            'add_new_item' => __('Add New Program'),
+            'edit_item' => __('Edit Program'),
+            'new_item' => __('New Program'),
+            'view_item' => __('View Program'),
+            'search_items' => __('Search Programs'),
+            'not_found' => __('No Programs Found'),
+            'not_found_in_trash' => __('No Programs Found in Trash'),
+            'parent_item_colon' => __('Parent Program:'),
+        ),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'rewrite' => array('slug' => 'programs'),
+    );
+    register_post_type('program', $program_args);
+
+    // Register Event post type
+    $event_args = array(
+        'label' => __('Events'),
+        'labels' => array(
+            'name' => __('Events'),
+            'singular_name' => __('Event'),
+            'add_new' => __('Add New'),
+            'add_new_item' => __('Add New Event'),
+            'edit_item' => __('Edit Event'),
+            'new_item' => __('New Event'),
+            'view_item' => __('View Event'),
+            'search_items' => __('Search Events'),
+            'not_found' => __('No Events Found'),
+            'not_found_in_trash' => __('No Events Found in Trash'),
+            'parent_item_colon' => __('Parent Event:'),
+        ),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'rewrite' => array('slug' => 'events'),
+    );
+    register_post_type('event', $event_args);
+
+    // Register Professor post type
+    $professor_args = array(
+        'label' => __('Professors'),
+        'labels' => array(
+            'name' => __('Professors'),
+            'singular_name' => __('Professor'),
+            'add_new' => __('Add New'),
+            'add_new_item' => __('Add New Professor'),
+            'edit_item' => __('Edit Professor'),
+            'new_item' => __('New Professor'),
+            'view_item' => __('View Professor'),
+            'search_items' => __('Search Professors'),
+            'not_found' => __('No Professors Found'),
+            'not_found_in_trash' => __('No Professors Found in Trash'),
+            'parent_item_colon' => __('Parent Professor:'),
+        ),
+        'public' => true,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'capability_type' => 'post',
+        'map_meta_cap' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'rewrite' => array('slug' => 'professors'),
+    );
+    register_post_type('professor', $professor_args);
+}
+add_action('init', 'university_custom_post_types');
 
 function university_custom_rest() {
   register_rest_field('post', 'authorName', array(

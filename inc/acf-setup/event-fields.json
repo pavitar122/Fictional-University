@@ -1,0 +1,67 @@
+{
+  "key": "group_64f0b1c8a1b32",
+  "title": "Event Fields",
+  "fields": [
+    {
+      "key": "field_64f0b1c8a1b33",
+      "label": "Event Date",
+      "name": "event_date",
+      "type": "date_picker",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "display_format": "Ymd",
+      "return_format": "Ymd",
+      "first_day": 1
+    },
+    {
+      "key": "field_64f0b1c8a1b34",
+      "label": "Related Programs",
+      "name": "related_programs",
+      "type": "relationship",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": [
+        "program"
+      ],
+      "taxonomy": "",
+      "filters": [
+        "search",
+        "post_type"
+      ],
+      "elements": "",
+      "min": "",
+      "max": "",
+      "return_format": "object"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "event"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "show_in_rest": 0
+}
