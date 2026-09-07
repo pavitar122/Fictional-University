@@ -6,6 +6,9 @@
     <?php wp_head(); ?>
   </head>
   <body <?php body_class(); ?>>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
     <header class="site-header">
     <div class="container">
       <h1 class="school-logo-text float-left"><a href="<?php echo site_url() ?>"><strong>Fictional</strong> University</a></h1>
