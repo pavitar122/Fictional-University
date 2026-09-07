@@ -195,6 +195,7 @@ function university_files() {
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_style('university_main_styles', get_theme_file_uri('/build/style-index.css'));
   wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
+  wp_enqueue_style('university_modern_theme', get_theme_file_uri('/build/theme-modern.css'), array('university_main_styles', 'university_extra_styles'), '1.0');
 
   wp_localize_script('main-university-js', 'universityData', array(
     'root_url' => get_site_url(),
@@ -280,6 +281,7 @@ function ourLoginCSS() {
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
   wp_enqueue_style('university_main_styles', get_theme_file_uri('/build/style-index.css'));
   wp_enqueue_style('university_extra_styles', get_theme_file_uri('/build/index.css'));
+  wp_enqueue_style('university_modern_theme', get_theme_file_uri('/build/theme-modern.css'), array('university_main_styles', 'university_extra_styles'), '1.0');
 }
 
 add_filter('login_headertitle', 'ourLoginTitle');
