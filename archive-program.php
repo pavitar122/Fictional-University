@@ -2,28 +2,26 @@
 
 get_header();
 pageBanner(array(
-  'title' => 'All Programs',
-  'subtitle' => 'There is something for everyone. Have a look around.'
+  'title'    => 'Academic Programs',
+  'subtitle' => 'From algorithms to oil paints — explore the majors our students turn into careers.',
 ));
- ?>
-
-<div class="container container--narrow page-section">
-
-<ul class="link-list min-list">
-
-<?php
-  while(have_posts()) {
-    the_post(); ?>
-    <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-  <?php }
-  echo paginate_links();
 ?>
-</ul>
 
+<div class="container page-section">
 
+  <div class="card-grid card-grid--3 stagger-children">
+    <?php
+      while (have_posts()) {
+        the_post();
+        get_template_part('template-parts/content', 'program');
+      }
+    ?>
+  </div>
+
+  <?php $links = paginate_links(); if ($links) : ?>
+  <div class="pagination-wrap"><?php echo $links; ?></div>
+  <?php endif; ?>
 
 </div>
 
 <?php get_footer();
-
-?>

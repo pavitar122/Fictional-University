@@ -1,41 +1,61 @@
 <?php
-  
-  get_header();
 
-  while(have_posts()) {
-    the_post();
-    pageBanner();
-     ?>
+get_header();
 
-    <div class="container container--narrow page-section">
-          <div class="metabox metabox--position-up metabox--with-home-link">
-        <p><a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('event'); ?>"><i class="fa fa-home" aria-hidden="true"></i> Events Home</a> <span class="metabox__main"><?php the_title(); ?></span></p>
-      </div>
+while (have_posts()) {
+  the_post();
+  pageBanner();
+  ?>
 
-      <div class="generic-content"><?php the_content(); ?></div>
+  <div class="container container--narrow page-section">
 
-      <?php
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="<?php echo get_post_type_archive_link('event'); ?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> All events</a>
+    </nav>
 
-        $relatedPrograms = get_field('related_programs');
+    <?php
+      $eventDate = get_field('event_date') ? new DateTime(get_field('event_date')) : null;
+      if ($eventDate) { ?>
+        <div class="event-details-bar">
+          <div class="event-details-bar__item">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+            <span>
+              <em>When</em>
+              <?php echo $eventDate->format('l, F j, Y'); ?>
+            </span>
+          </div>
+          <div class="event-details-bar__item">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span>
+              <em>Where</em>
+              Main Campus
+            </span>
+          </div>
+          <div class="event-details-bar__cta">
+            <a href="<?php echo wp_registration_url(); ?>" class="btn btn--primary btn--small">Reserve a Spot</a>
+          </div>
+        </div>
+      <?php }
+    ?>
 
-        if ($relatedPrograms) {
-          echo '<hr class="section-break">';
-          echo '<h2 class="headline headline--medium">Related Program(s)</h2>';
-          echo '<ul class="link-list min-list">';
-          foreach($relatedPrograms as $program) { ?>
-            <li><a href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a></li>
-          <?php }
-          echo '</ul>';
-        }
+    <div class="generic-content"><?php the_content(); ?></div>
 
-      ?>
+    <?php
+      $relatedPrograms = get_field('related_programs');
+      if ($relatedPrograms) { ?>
+        <section class="related-block">
+          <h2 class="related-block__title">Related Programs</h2>
+          <div class="chip-list">
+            <?php foreach ($relatedPrograms as $program) { ?>
+              <a class="chip" href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a>
+            <?php } ?>
+          </div>
+        </section>
+      <?php }
+    ?>
 
-    </div>
-    
+  </div>
 
-    
   <?php }
 
-  get_footer();
-
-?>
+get_footer();

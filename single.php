@@ -1,25 +1,45 @@
 <?php
-  
-  get_header();
+/**
+ * Single blog post.
+ */
 
-  while(have_posts()) {
-    the_post();
-    pageBanner();
-     ?>
+get_header();
 
-    <div class="container container--narrow page-section">
-          <div class="metabox metabox--position-up metabox--with-home-link">
-        <p><a class="metabox__blog-home-link" href="<?php echo site_url('/blog'); ?>"><i class="fa fa-home" aria-hidden="true"></i> Blog Home</a> <span class="metabox__main">Posted by <?php the_author_posts_link(); ?> on <?php the_time('n.j.y'); ?> in <?php echo get_the_category_list(', '); ?></span></p>
-      </div>
+while (have_posts()) {
+  the_post();
+  // The banner leads with the post's featured image (see pageBanner()).
+  pageBanner(array(
+    'eyebrow'  => 'University Blog',
+    'subtitle' => 'By ' . get_the_author() . ' &middot; ' . get_the_date('F j, Y'),
+  ));
+  ?>
 
-      <div class="generic-content"><?php the_content(); ?></div>
+  <div class="container container--narrow page-section">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="<?php echo site_url('/blog'); ?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to the blog</a>
+      <?php
+        $cats = get_the_category();
+        if ($cats) {
+          echo ' <span class="breadcrumbs__sep" aria-hidden="true">/</span> <a href="' . esc_url(get_category_link($cats[0])) . '">' . esc_html($cats[0]->name) . '</a>';
+        }
+      ?>
+    </nav>
 
-    </div>
-    
+    <div class="generic-content"><?php the_content(); ?></div>
 
-    
-  <?php }
+    <footer class="post-footer">
+      <?php if (get_the_category_list()) : ?>
+        <p class="post-footer__label">Filed under</p>
+        <div class="post-footer__terms"><?php echo get_the_category_list(''); ?></div>
+      <?php endif; ?>
 
-  get_footer();
+      <nav class="post-nav" aria-label="Post navigation">
+        <div class="post-nav__prev"><?php previous_post_link('%link', '<span class="post-nav__label">Older post</span><span class="post-nav__title">%title</span>'); ?></div>
+        <div class="post-nav__next"><?php next_post_link('%link', '<span class="post-nav__label">Newer post</span><span class="post-nav__title">%title</span>'); ?></div>
+      </nav>
+    </footer>
+  </div>
 
-?>
+<?php }
+
+get_footer();

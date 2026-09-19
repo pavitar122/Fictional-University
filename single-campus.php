@@ -1,77 +1,88 @@
 <?php
-  
-  get_header();
 
-  while(have_posts()) {
-    the_post();
-    pageBanner();
-     ?>
+get_header();
 
-    <div class="container container--narrow page-section">
-          <div class="metabox metabox--position-up metabox--with-home-link">
-        <p><a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('campus'); ?>"><i class="fa fa-home" aria-hidden="true"></i> All Campuses</a> <span class="metabox__main"><?php the_title(); ?></span></p>
+while (have_posts()) {
+  the_post();
+  pageBanner();
+  ?>
+
+  <div class="container page-section">
+
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="<?php echo get_post_type_archive_link('campus'); ?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> All campuses</a>
+    </nav>
+
+    <div class="single-layout">
+
+      <div class="single-layout__main generic-content">
+        <?php the_content(); ?>
+
+        <?php
+          $address = get_field('campus_address');
+          $description = get_field('campus_description');
+          if ($description) { ?>
+            <div class="campus-description">
+              <h3>About This Campus</h3>
+              <?php echo wp_kses_post(wpautop($description)); ?>
+            </div>
+          <?php }
+        ?>
       </div>
 
-      <div class="generic-content"><?php the_content(); ?></div>
+      <aside class="single-layout__aside">
 
-      <?php 
-        $address = get_field('campus_address');
-        $description = get_field('campus_description');
-      ?>
-
-      <?php if ($address || $description): ?>
-        <div class="campus-details">
+        <div class="info-card">
+          <h3 class="info-card__title"><i class="fa fa-map-marker" aria-hidden="true"></i> Find Us</h3>
           <?php if ($address): ?>
-            <p><strong>Address:</strong> <?php echo esc_html($address); ?></p>
+            <p class="info-card__address"><?php echo esc_html($address); ?></p>
           <?php endif; ?>
-          <?php if ($description): ?>
-            <div class="campus-description">
-              <strong>Description:</strong>
-              <?php echo wp_kses_post($description); ?>
-            </div>
-          <?php endif; ?>
+          <p class="info-card__text">Guided tours run every Saturday — no appointment needed.</p>
+          <a href="<?php echo get_post_type_archive_link('event'); ?>" class="btn btn--primary btn--block">Plan a Visit</a>
         </div>
-      <?php endif; ?>
 
-      <?php 
-        $relatedPrograms = new WP_Query(array(
-          'posts_per_page' => -1,
-          'post_type' => 'program',
-          'orderby' => 'title',
-          'order' => 'ASC',
-          'meta_query' => array(
-            array(
-              'key' => 'related_campus',
-              'compare' => 'LIKE',
-              'value' => '"' . get_the_ID() . '"'
-            )
-          )
-        ));
-
-        if ($relatedPrograms->have_posts()) {
-          echo '<hr class="section-break">';
-        echo '<h2 class="headline headline--medium">Programs Available At This Campus</h2>';
-
-        echo '<ul class="min-list link-list">';
-        while($relatedPrograms->have_posts()) {
-          $relatedPrograms->the_post(); ?>
-          <li>
-            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-          </li>
-        <?php }
-        echo '</ul>';
-        }
-
-        wp_reset_postdata();
-
-      ?>
+      </aside>
 
     </div>
-    
 
-    
+    <?php
+      $relatedPrograms = new WP_Query(array(
+        'posts_per_page' => -1,
+        'post_type'      => 'program',
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'meta_query'     => array(
+          array(
+            'key'     => 'related_campus',
+            'compare' => 'LIKE',
+            'value'   => '"' . get_the_ID() . '"',
+          ),
+        ),
+      ));
+
+      if ($relatedPrograms->have_posts()) { ?>
+        <section class="related-block">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Academics</p>
+              <h2 class="section-head__title">Programs Available at This Campus</h2>
+            </div>
+          </div>
+          <div class="card-grid card-grid--3">
+            <?php
+              while ($relatedPrograms->have_posts()) {
+                $relatedPrograms->the_post();
+                get_template_part('template-parts/content', 'program');
+              }
+            ?>
+          </div>
+        </section>
+      <?php }
+      wp_reset_postdata();
+    ?>
+
+  </div>
+
   <?php }
 
-  get_footer();
-
-?>
+get_footer();

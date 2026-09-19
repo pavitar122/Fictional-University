@@ -1,33 +1,34 @@
 <?php
+/**
+ * Blog posts index (the /blog page).
+ */
 
 get_header();
 pageBanner(array(
-  'title' => 'Welcome to our blog!',
-  'subtitle' => 'Keep up with our latest news.'
+  'title'    => 'The University Blog',
+  'subtitle' => 'Study tips, campus news, and honest stories from the people who live here.',
 ));
- ?>
-<div class="container container--narrow page-section">
-<?php
-  while(have_posts()) {
-    the_post(); ?>
-    <div class="post-item">
-      <h2 class="headline headline--medium headline--post-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-      
-      <div class="metabox">
-        <p>Posted by <?php the_author_posts_link(); ?> on <?php the_time('n.j.y'); ?> in <?php echo get_the_category_list(', '); ?></p>
-      </div>
-
-      <div class="generic-content">
-        <?php the_excerpt(); ?>
-        <p><a class="btn btn--blue" href="<?php the_permalink(); ?>">Continue reading &raquo;</a></p>
-      </div>
-
-    </div>
-  <?php }
-  echo paginate_links();
 ?>
+
+<div class="container page-section">
+
+  <div class="post-grid stagger-children">
+    <?php
+      if (have_posts()) {
+        while (have_posts()) {
+          the_post();
+          get_template_part('template-parts/content', 'post-card');
+        }
+      } else {
+        echo '<p class="empty-note">No posts yet — the first story is on its way.</p>';
+      }
+    ?>
+  </div>
+
+  <?php $links = paginate_links(); if ($links) : ?>
+  <div class="pagination-wrap"><?php echo $links; ?></div>
+  <?php endif; ?>
+
 </div>
 
-<?php get_footer();
-
-?>
+<?php get_footer(); ?>

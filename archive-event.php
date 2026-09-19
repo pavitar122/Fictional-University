@@ -2,27 +2,34 @@
 
 get_header();
 pageBanner(array(
-  'title' => 'All Events',
-  'subtitle' => 'See what is going on in our world.'
+  'title'    => 'University Events',
+  'subtitle' => 'Open days, concerts, career fairs — see what is coming up on campus.',
 ));
- ?>
-
-<div class="container container--narrow page-section">
-<?php
-  
-  while(have_posts()) {
-    the_post(); 
-    get_template_part('template-parts/content-event');
-   }
-  echo paginate_links();
 ?>
 
-<hr class="section-break">
+<div class="container page-section">
 
-<p>Looking for a recap of past events? <a href="<?php echo site_url('/past-events') ?>">Check out our past events archive</a>.</p>
+  <div class="card-grid card-grid--3 stagger-children">
+    <?php
+      if (have_posts()) {
+        while (have_posts()) {
+          the_post();
+          get_template_part('template-parts/content', 'event');
+        }
+      } else {
+        echo '<p class="empty-note">No upcoming events on the calendar right now — check back soon.</p>';
+      }
+    ?>
+  </div>
+
+  <?php $links = paginate_links(); if ($links) : ?>
+  <div class="pagination-wrap"><?php echo $links; ?></div>
+  <?php endif; ?>
+
+  <div class="after-grid-note">
+    <p>Looking for a recap? <a href="<?php echo site_url('/past-events') ?>">Browse our past events archive</a>.</p>
+  </div>
 
 </div>
 
 <?php get_footer();
-
-?>
